@@ -76,11 +76,21 @@ local level1Text
 -- Boolean variable that states if user clicked the answer or not
 local alreadyClickedAnswer = false
 
+-- displays the text that say incorrect
+local incorrect
+
 
 -----------------------------------------------------------------------------------------
 -- SOUND
 -----------------------------------------------------------------------------------------
 
+-- plays incorrect sound 
+local wrongSound = audio.loadSound( "Sounds/WrongBuzzer.mp3")
+local wrongSoundChannel
+
+-- plays correct sound
+local correctSound = audio.loadSound( "Sounds/CorrectAnswer.mp3")
+local correctSoundChannel
 
 -----------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
@@ -150,6 +160,7 @@ local function RestartScene()
 
     alreadyClickedAnswer = false
     correct.isVisible = false
+    incorrect.isVisible = false
 
     livesText.text = "Number of lives = " .. tostring(lives)
     numberCorrectText.text = "Number correct = " .. tostring(numberCorrect)
@@ -177,6 +188,7 @@ local function TouchListenerAnswer(touch)
         -- if the user gets the answer right, display Correct and call RestartSceneRight
         if (answer == tonumber(userAnswer)) then     
             correct.isVisible = true
+            correctSoundChannel = audio.play(correctSound)
             -- increase the number correct by 1
             numberCorrect = numberCorrect + 1
             -- call RestartScene after 1 second
@@ -196,6 +208,8 @@ local function TouchListenerWrongAnswer1(touch)
 
 
         if (answer ~= tonumber(userAnswer)) then
+            incorrect.isVisible = true
+            wrongSoundChannel = audio.play(wrongSound)
             -- decrease a life
             lives = lives - 1
             -- call RestartScene after 1 second
@@ -292,6 +306,11 @@ function scene:create( event )
     correct = display.newText("Correct", display.contentWidth/2, display.contentHeight*1/3, nil, 50 )
     correct:setTextColor(100/255, 47/255, 210/255)
     correct.isVisible = false
+
+    -- create the text object that will say incorrect, set the color and the hide it 
+    incorrect = display.newText("Incorrect", display.contentWidth/2, display.contentHeight*1/3, nil, 50 )
+    incorrect:setTextColor(0.7, 0.1, 0.3)
+    incorrect.isVisible = false 
 
     -- create the text object that will say Out of Time, set the colour and then hide it
     outOfTimeText = display.newText("Out of Time!", display.contentWidth*2/5, display.contentHeight*1/3, nil, 50)

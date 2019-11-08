@@ -16,4 +16,4 @@ local composer = require( "composer" )
 
 -----------------------------------------------------------------------------------------
 
-composer.gotoScene( "you_Win" )
+composer.gotoScene( "level1_screen" )
