@@ -92,11 +92,15 @@ local wrongSoundChannel
 local correctSound = audio.loadSound( "Sounds/CorrectAnswer.mp3")
 local correctSoundChannel
 
+local level1Music = audio.loadSound( "Sounds/level1Music.wav")
+local level1MusicChannel 
 -----------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
 -----------------------------------------------------------------------------------------
 
+
 local function DetermineAnswers()
+
     -- calculate the correct answer as well as the wrong answers
     answer = firstNumber + secondNumber
     wrongAnswer1 = answer + math.random(1,4)
@@ -340,6 +344,8 @@ end
 
 -- The function called when the scene is issued to appear on screen
 function scene:show( event )
+
+    level1MusicChannel = audio.play(level1Music)
 
     -- Creating a group that associates objects with the scene
     --local sceneGroup = self.view
